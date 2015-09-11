@@ -46,6 +46,33 @@ namespace BananaVM {
 			 */
 			Assembler& add(Opcode opcode);
 
+			/**
+			 * Adds a generic opcode without any argument
+			 *
+			 * @param opcode the opcode to add
+			 *
+			 * @return this asembler
+			 */
+			Assembler& add(Opcode opcode, MemoryByte arg0);
+
+			/**
+			 * Adds a generic opcode without any argument
+			 *
+			 * @param opcode the opcode to add
+			 *
+			 * @return this asembler
+			 */
+			Assembler& add(Opcode opcode, MemoryByte args0, MemoryByte arg1);
+
+			/**
+			 * Adds a generic opcode without any argument
+			 *
+			 * @param opcode the opcode to add
+			 *
+			 * @return this asembler
+			 */
+			Assembler& add(Opcode opcode, MemoryByte args0, MemoryByte arg1, MemoryByte arg2);
+
 		public:
 			/**
 			 * Loads a constant into a register
@@ -57,6 +84,7 @@ namespace BananaVM {
 			 */
 			Assembler& loadConstant(RegisterName registerName, Register constant);
 			Assembler& loadAddress(RegisterName registerName, MemoryAddress address);
+			Assembler& loadRegister(RegisterName registerName, RegisterName address);
 
 			/**
 			 * Generates a debug instruction

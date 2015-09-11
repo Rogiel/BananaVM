@@ -18,8 +18,6 @@ namespace BananaVM {
 			for(int i = 0; i<BananaVM::MAX_REGISTER_COUNT; i++) {
 				std::cout << "	r" << i << " = " << context.getRegister(i) << std::endl;
 			}
-
-			context.setHalted(true);
 		}
 	}
 }

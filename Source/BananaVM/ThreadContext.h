@@ -27,7 +27,10 @@ namespace BananaVM {
 		 */
 		Register _registers[BananaVM::MAX_REGISTER_COUNT] = {0};
 
-		bool _halted = 0;
+		/**
+		 * A flag that indicates if the thread has been halted
+		 */
+		bool _halted = false;
 
 	public:
 		/**
@@ -81,10 +84,20 @@ namespace BananaVM {
 			_registers[reg] = aRegister;
 		}
 
+		/**
+		 * A method that checks whether the thread is halted or not
+		 *
+		 * @return true if the thread is halted
+		 */
 		bool isHalted() const {
 			return _halted;
 		}
 
+		/**
+		 * Sets the thread halt state
+		 *
+		 * @param halted the thread halt state
+		 */
 		void setHalted(bool halted) {
 			_halted = halted;
 		}

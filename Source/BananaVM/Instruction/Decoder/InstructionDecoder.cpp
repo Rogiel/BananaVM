@@ -6,6 +6,7 @@
 //
 
 #include <string>
+#include <iostream>
 
 #include "../../Opcode.h"
 
@@ -23,14 +24,46 @@ namespace BananaVM {
 														  Memory::MemoryResolver& memoryResolver) {
 
 				auto& pc = context.getProgramCounter();
-				MemoryByte opcodeByte = memoryResolver[pc];
+				MemoryByte opcodeByte = memoryResolver[pc++];
 				Opcode opcode = static_cast<Opcode>(opcodeByte);
 
-				pc++;
 				switch(opcode) {
-					case Opcode::LOAD:
-						return std::unique_ptr<Instruction>(new LoadInstruction());
+					case Opcode::LOAD: {
+						MemoryByte arg0 = memoryResolver[pc++];
 
+						MemoryByte typeNumeric = static_cast<RegisterName>((arg0 & 0b11110000) >> 4);
+						RegisterName registerName = static_cast<RegisterName>(arg0 & 0b00001111);
+
+						LoadInstruction::Type type = static_cast<LoadInstruction::Type>(typeNumeric);
+
+						switch(type) {
+							case LoadInstruction::Type::CONSTANT: {
+								MemoryByte arg1 = memoryResolver[pc++];
+								MemoryByte arg2 = memoryResolver[pc++];
+
+								Register value = arg2 | arg1 << 8;
+								return std::unique_ptr<Instruction>(
+										new LoadInstruction(LoadInstruction::Type::CONSTANT, registerName, 0, value, 0));
+							}
+
+							case LoadInstruction::Type::REGISTER: {
+								MemoryByte arg1 = memoryResolver[pc++];
+								RegisterName sourceRegisterName = static_cast<RegisterName>(arg1 & 0b00001111);
+
+								return std::unique_ptr<Instruction>(
+										new LoadInstruction(LoadInstruction::Type::REGISTER, registerName, 0, 0, sourceRegisterName));
+							}
+
+							case LoadInstruction::Type::ADDRESS: {
+								MemoryByte arg1 = memoryResolver[pc++];
+								MemoryByte arg2 = memoryResolver[pc++];
+
+								MemoryAddress address = arg2 | arg1 << 8;
+								return std::unique_ptr<Instruction>(
+										new LoadInstruction(LoadInstruction::Type::ADDRESS, registerName, address, 0, 0));
+							}
+						}
+					}
 					case Opcode::HALT:
 						return std::unique_ptr<Instruction>(new HaltInstruction());
 

@@ -22,8 +22,10 @@ int main() {
 
 	// assembles a very simple program
 	Assembler::Assembler(memoryStore)
-			.loadConstant(0, 0)
-			.loadConstant(0, 0)
+			.debug()
+			.loadConstant(0, 100)
+			.loadAddress(1, 1)
+			.loadRegister(2, 0)
 			.debug()
 			.halt();
 
