@@ -11,9 +11,9 @@
 
 namespace BananaVM {
 	namespace Instruction {
-		void HaltInstruction::perform(ThreadContext& context) {
+		void HaltInstruction::perform(ProcessorThread& thread) {
 			std::cout << "HALT" << std::endl;
-			context.setHalted(true);
+			thread.getContext().setHalted(true);
 		}
 	}
 }

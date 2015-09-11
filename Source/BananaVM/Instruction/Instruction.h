@@ -7,10 +7,9 @@
 
 #pragma once
 
+#include "../ProcessorThread.h"
+
 namespace BananaVM {
-
-	class ThreadContext;
-
 	namespace Instruction {
 
 		/**
@@ -23,7 +22,7 @@ namespace BananaVM {
 			 *
 			 * @param context the processor context
 			 */
-			virtual void perform(ThreadContext& context) = 0;
+			virtual void perform(ProcessorThread& thread) = 0;
 
 		};
 	}

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "Assembler.h"
+#include "../Instruction/LoadInstruction.h"
 
 namespace BananaVM {
 	namespace Assembler {
@@ -17,40 +18,6 @@ namespace BananaVM {
 		Assembler& Assembler::add(Opcode opcode) {
 			_memoryStore[_pointer++] = static_cast<MemoryByte>(opcode);
 			return *this;
-		}
-
-		Assembler& Assembler::loadConstant(RegisterName registerName, Register constant) {
-			return add(
-					Opcode::LOAD,
-					static_cast<MemoryByte>((registerName & 0b00001111) | 0b0010 << 4),
-					static_cast<MemoryByte>((constant & 0xFF00) >> 8),
-					static_cast<MemoryByte>(constant & 0x00FF)
-			);
-		}
-
-		Assembler& Assembler::loadAddress(RegisterName registerName, MemoryAddress address) {
-			return add(
-					Opcode::LOAD,
-					static_cast<MemoryByte>((registerName & 0b00001111) | 0b0001 << 4),
-					static_cast<MemoryByte>((address & 0xFF00) >> 8),
-					static_cast<MemoryByte>(address & 0x00FF)
-			);
-		}
-
-		Assembler& Assembler::loadRegister(RegisterName registerName, RegisterName address) {
-			return add(
-					Opcode::LOAD,
-					static_cast<MemoryByte>((registerName & 0b00001111) | 0b0000 << 4),
-					static_cast<MemoryByte>((address & 0b00001111) >> 8)
-			);
-		}
-
-		Assembler& Assembler::debug() {
-			return add(Opcode::DEBUG);
-		}
-
-		Assembler& Assembler::halt() {
-			return add(Opcode::HALT);
 		}
 
 		Assembler& Assembler::add(Opcode opcode, MemoryByte arg0) {
@@ -73,5 +40,48 @@ namespace BananaVM {
 			_memoryStore[_pointer++] = arg2;
 			return *this;
 		}
+
+		Assembler& Assembler::seek(MemoryAddress address) {
+			_pointer = address;
+			return *this;
+		}
+
+		Assembler& Assembler::loadConstant(RegisterName registerName, Register constant) {
+			return add(
+					Opcode::LOAD,
+					static_cast<MemoryByte>((registerName & 0b00001111) |
+							(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::CONSTANT) & 0b1111) << 4),
+					static_cast<MemoryByte>((constant & 0xFF00) >> 8),
+					static_cast<MemoryByte>(constant & 0x00FF)
+			);
+		}
+
+		Assembler& Assembler::loadAddress(RegisterName registerName, MemoryAddress address) {
+			return add(
+					Opcode::LOAD,
+					static_cast<MemoryByte>((registerName & 0b00001111) |
+							(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::ADDRESS) & 0b1111) << 4),
+					static_cast<MemoryByte>((address & 0xFF00) >> 8),
+					static_cast<MemoryByte>(address & 0x00FF)
+			);
+		}
+
+		Assembler& Assembler::loadRegister(RegisterName registerName, RegisterName address) {
+			return add(
+					Opcode::LOAD,
+					static_cast<MemoryByte>((registerName & 0b00001111) |
+							(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::REGISTER) & 0b1111) << 4),
+					static_cast<MemoryByte>((address & 0b00001111) >> 8)
+			);
+		}
+
+		Assembler& Assembler::debug() {
+			return add(Opcode::DEBUG);
+		}
+
+		Assembler& Assembler::halt() {
+			return add(Opcode::HALT);
+		}
+
 	}
 }

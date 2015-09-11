@@ -74,6 +74,9 @@ namespace BananaVM {
 			Assembler& add(Opcode opcode, MemoryByte args0, MemoryByte arg1, MemoryByte arg2);
 
 		public:
+			Assembler& seek(MemoryAddress address);
+
+		public:
 			/**
 			 * Loads a constant into a register
 			 *

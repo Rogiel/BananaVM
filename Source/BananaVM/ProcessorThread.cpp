@@ -16,10 +16,10 @@ namespace BananaVM {
 	ProcessorThread::ProcessorThread(Memory::MemoryResolver& memoryResolver) : _memoryResolver(memoryResolver) {}
 
 	void ProcessorThread::step() {
-		Instruction::Decoder::InstructionDecoder instructionDecoder;
+		static Instruction::Decoder::InstructionDecoder instructionDecoder;
 		auto instruction = instructionDecoder.decode(_context, _memoryResolver);
 		if(instruction) {
-			instruction->perform(_context);
+			instruction->perform(*this);
 		} else {
 			throw std::string("Instruction decoder returned a invalid instruction");
 		}

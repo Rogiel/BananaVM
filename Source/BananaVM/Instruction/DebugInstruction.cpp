@@ -11,12 +11,12 @@
 
 namespace BananaVM {
 	namespace Instruction {
-		void DebugInstruction::perform(ThreadContext& context) {
+		void DebugInstruction::perform(ProcessorThread& thread) {
 			std::cout << "DEBUG: " << std::endl;
 
-			std::cout << "	pc = " << context.getProgramCounter() << std::endl;
+			std::cout << "	pc = " << thread.getContext().getProgramCounter() << std::endl;
 			for(int i = 0; i<BananaVM::MAX_REGISTER_COUNT; i++) {
-				std::cout << "	r" << i << " = " << context.getRegister(i) << std::endl;
+				std::cout << "	r" << i << " = " << thread.getContext().getRegister(i) << std::endl;
 			}
 		}
 	}

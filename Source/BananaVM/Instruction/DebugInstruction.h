@@ -22,7 +22,7 @@ namespace BananaVM {
 			 *
 			 * @param context the processor context
 			 */
-			virtual void perform(ThreadContext& context) override;
+			virtual void perform(ProcessorThread& thread) override;
 
 		};
 	}

@@ -21,8 +21,8 @@ namespace BananaVM {
 
 		}
 
-		void LoadInstruction::perform(ThreadContext& context) {
-			auto& aRegister = context.getRegister(_registerName);
+		void LoadInstruction::perform(ProcessorThread& thread) {
+			auto& aRegister = thread.getContext().getRegister(_registerName);
 
 			switch(_type) {
 				case Type::CONSTANT: {
@@ -31,13 +31,14 @@ namespace BananaVM {
 				}
 
 				case Type::ADDRESS: {
-					// aRegister = context.
+					auto& memoryResolver = thread.getMemoryResolver();
+					aRegister = memoryResolver[_memoryAddress + 1] | memoryResolver[_memoryAddress] << 8;
 					return;
 				}
 
 
 				case Type::REGISTER: {
-					aRegister = context.getRegister(_sourceRegisterName);
+					aRegister = thread.getContext().getRegister(_sourceRegisterName);
 					return;
 				}
 			}

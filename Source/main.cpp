@@ -24,7 +24,7 @@ int main() {
 	Assembler::Assembler(memoryStore)
 			.debug()
 			.loadConstant(0, 100)
-			.loadAddress(1, 1)
+			.loadAddress(1, 1024)
 			.loadRegister(2, 0)
 			.debug()
 			.halt();
