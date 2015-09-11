@@ -26,6 +26,9 @@ set(SOURCE_FILES
         Source/BananaVM/Instruction/LoadInstruction.cpp
         Source/BananaVM/Instruction/LoadInstruction.h
 
+        Source/BananaVM/Instruction/StoreInstruction.cpp
+        Source/BananaVM/Instruction/StoreInstruction.h
+
         Source/BananaVM/Memory/MemoryResolver.cpp
         Source/BananaVM/Memory/MemoryResolver.h
 

@@ -14,6 +14,7 @@
 #include "../LoadInstruction.h"
 #include "../HaltInstruction.h"
 #include "../DebugInstruction.h"
+#include "../StoreInstruction.h"
 
 namespace BananaVM {
 	namespace Instruction {
@@ -64,6 +65,18 @@ namespace BananaVM {
 							}
 						}
 					}
+
+					case Opcode::STORE: {
+						MemoryByte arg0 = memoryResolver[pc++];
+						MemoryByte arg1 = memoryResolver[pc++];
+						MemoryByte arg2 = memoryResolver[pc++];
+
+						RegisterName registerName = static_cast<RegisterName>(arg0 & 0b00001111);
+						MemoryAddress address = arg2 | arg1 << 8;
+
+						return std::unique_ptr<Instruction>(new StoreInstruction(registerName, address));
+					}
+
 					case Opcode::HALT:
 						return std::unique_ptr<Instruction>(new HaltInstruction());
 

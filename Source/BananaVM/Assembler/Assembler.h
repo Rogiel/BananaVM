@@ -89,6 +89,8 @@ namespace BananaVM {
 			Assembler& loadAddress(RegisterName registerName, MemoryAddress address);
 			Assembler& loadRegister(RegisterName registerName, RegisterName address);
 
+			Assembler& store(RegisterName registerName, MemoryAddress address);
+
 			/**
 			 * Generates a debug instruction
 			 */

@@ -75,6 +75,16 @@ namespace BananaVM {
 			);
 		}
 
+		Assembler& Assembler::store(RegisterName registerName, MemoryAddress address) {
+			return add(
+					Opcode::STORE,
+					static_cast<MemoryByte>((registerName & 0b00001111) |
+											(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::REGISTER) & 0b1111) << 4),
+					static_cast<MemoryByte>((address & 0xFF00) >> 8),
+					static_cast<MemoryByte>(address & 0x00FF)
+			);
+		}
+
 		Assembler& Assembler::debug() {
 			return add(Opcode::DEBUG);
 		}
