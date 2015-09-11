@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "Assembler.h"
-#include "../Instruction/LoadInstruction.h"
+#include "../Instruction/MemoryInstructions.h"
 
 namespace BananaVM {
 	namespace Assembler {
@@ -46,6 +46,11 @@ namespace BananaVM {
 			return *this;
 		}
 
+		Assembler& Assembler::mark(MemoryAddress& address) {
+			address = _pointer;
+			return *this;
+		}
+
 		Assembler& Assembler::loadConstant(RegisterName registerName, Register constant) {
 			return add(
 					Opcode::LOAD,
@@ -70,8 +75,8 @@ namespace BananaVM {
 			return add(
 					Opcode::LOAD,
 					static_cast<MemoryByte>((registerName & 0b00001111) |
-							(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::REGISTER) & 0b1111) << 4),
-					static_cast<MemoryByte>((address & 0b00001111) >> 8)
+							(static_cast<MemoryByte>(Instruction::LoadInstruction::Type::REGISTER) & 0b00001111) << 4),
+					static_cast<MemoryByte>(address & 0b00001111)
 			);
 		}
 
@@ -85,22 +90,38 @@ namespace BananaVM {
 			);
 		}
 
-		Assembler& Assembler::add(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName) {
+		Assembler& Assembler::add(RegisterName registerName0, RegisterName registerName1) {
 			return add(
 					Opcode::ADD,
-					static_cast<MemoryByte>(resultRegisterName & 0b00001111),
 					static_cast<MemoryByte>(
-							(registerName0 & 0b00001111) | ((registerName1 & 0b00001111) << 4)
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
 					)
 			);
 		}
 
-		Assembler& Assembler::subtract(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName) {
+		Assembler& Assembler::subtract(RegisterName registerName0, RegisterName registerName1) {
 			return add(
 					Opcode::SUBTRACT,
-					static_cast<MemoryByte>(resultRegisterName & 0b00001111),
 					static_cast<MemoryByte>(
-							(registerName0 & 0b00001111) | ((registerName1 & 0b00001111) << 4)
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::multiply(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::MULTIPLY,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::divide(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::DIVIDE,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
 					)
 			);
 		}
@@ -113,5 +134,144 @@ namespace BananaVM {
 			return add(Opcode::HALT);
 		}
 
+		Assembler& Assembler::bitwiseAnd(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::AND,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::bitwiseOr(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::OR,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::bitwiseNand(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::NAND,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::bitwiseXor(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::XOR,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::bitwiseNot(RegisterName registerName0) {
+			return add(
+					Opcode::NOT,
+					static_cast<MemoryByte>(registerName0 & 0b00001111)
+			);
+		}
+
+		Assembler& Assembler::bitwiseRightShift(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::RIGHT_SHIFT,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::bitwiseLeftShift(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::LEFT_SHIFT,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::jump(MemoryAddress memoryAddress) {
+			return add(
+					Opcode::JUMP,
+					static_cast<MemoryByte>((memoryAddress & 0xFF00) >> 8),
+					static_cast<MemoryByte>(memoryAddress & 0x00FF)
+			);
+		}
+
+		Assembler& Assembler::jumpIf(RegisterName registerName, MemoryAddress memoryAddress) {
+			return add(
+					Opcode::CONDITIONAL_JUMP,
+					static_cast<MemoryByte>(registerName & 0b00001111),
+					static_cast<MemoryByte>((memoryAddress & 0xFF00) >> 8),
+					static_cast<MemoryByte>(memoryAddress & 0x00FF)
+			);
+		}
+
+		Assembler& Assembler::jumpIfCarry(MemoryAddress memoryAddress) {
+			return add(
+					Opcode::JUMP_IF_CARRY,
+					static_cast<MemoryByte>((memoryAddress & 0xFF00) >> 8),
+					static_cast<MemoryByte>(memoryAddress & 0x00FF)
+			);
+		}
+
+		Assembler& Assembler::greaterThan(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::GREATER_THAN,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::greaterOrEqualThan(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::GREATER_OR_EQUAL_THAN,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::lessThan(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::LESS_THAN,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::lessOrEqualThan(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::LESS_OR_EQUAL_THAN,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::equal(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::EQUAL,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::notEqual(RegisterName registerName0, RegisterName registerName1) {
+			return add(
+					Opcode::NOT_EQUAL,
+					static_cast<MemoryByte>(
+							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
+					)
+			);
+		}
 	}
 }

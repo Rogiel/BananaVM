@@ -8,9 +8,24 @@
 #pragma once
 
 #include "Instruction.h"
+#include "../Types.h"
 
 namespace BananaVM {
 	namespace Instruction {
+
+		/**
+		 * Implements the HALT instruction
+		 */
+		class HaltInstruction : public Instruction {
+		public:
+			/**
+			 * Executes the instruction
+			 *
+			 * @param context the processor context
+			 */
+			virtual void perform(ProcessorThread& thread) override;
+
+		};
 
 		/**
 		 * Implements the DEBUG instruction
@@ -25,7 +40,6 @@ namespace BananaVM {
 			virtual void perform(ProcessorThread& thread) override;
 
 		};
+
 	}
 }
-
-

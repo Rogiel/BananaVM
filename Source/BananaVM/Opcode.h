@@ -32,6 +32,7 @@ namespace BananaVM {
 
 		JUMP = 0x20,
 		CONDITIONAL_JUMP = 0x21,
+		JUMP_IF_CARRY = 0x22,
 
 		GREATER_THAN = 0x30,
 		GREATER_OR_EQUAL_THAN = 0x31,

@@ -6,3 +6,15 @@
 //
 
 #include "Instruction.h"
+
+namespace BananaVM {
+	namespace Instruction {
+
+		UnaryInstruction::UnaryInstruction(RegisterName register0) :
+				_register0(register0) { }
+
+		BinaryInstruction::BinaryInstruction(RegisterName register0, RegisterName register1) :
+				_register0(register0), _register1(register1) { }
+
+	}
+}

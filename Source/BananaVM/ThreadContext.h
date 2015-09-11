@@ -85,6 +85,34 @@ namespace BananaVM {
 		}
 
 		/**
+		 * @return the accumulator register
+		 */
+		Register& getAccumulatorRegister() {
+			return getRegister(REGISTER_ACCUMULATOR);
+		}
+
+		/**
+		 * @return the accumulator register
+		 */
+		const Register& getAccumulatorRegister() const {
+			return getRegister(REGISTER_ACCUMULATOR);
+		}
+
+		/**
+		 * @return the carry register
+		 */
+		Register& getCarryRegister() {
+			return getRegister(REGISTER_CARRY);
+		}
+
+		/**
+		 * @return the carry register
+		 */
+		const Register& getCarryRegister() const {
+			return getRegister(REGISTER_CARRY);
+		}
+
+		/**
 		 * A method that checks whether the thread is halted or not
 		 *
 		 * @return true if the thread is halted

@@ -5,10 +5,11 @@
 //  Copyright (c) 2014-2015 Rogiel Sulzbach. All rights reserved.
 //
 
-#include <iostream>
-#include "LoadInstruction.h"
+#include "MemoryInstructions.h"
 
+#include <iostream>
 #include "../ThreadContext.h"
+#include "../Exception/InvalidArgumentException.h"
 
 namespace BananaVM {
 	namespace Instruction {
@@ -22,6 +23,11 @@ namespace BananaVM {
 		}
 
 		void LoadInstruction::perform(ProcessorThread& thread) {
+			if(_registerName == REGISTER_ACCUMULATOR |
+			   _registerName == REGISTER_CARRY) {
+				throw Exception::InvalidArgumentException();
+			}
+
 			auto& aRegister = thread.getContext().getRegister(_registerName);
 
 			switch(_type) {
@@ -43,5 +49,17 @@ namespace BananaVM {
 				}
 			}
 		}
+
+		StoreInstruction::StoreInstruction(RegisterName registerName, MemoryAddress memoryAddress) :
+				_registerName(registerName), _memoryAddress(memoryAddress) {}
+
+		void StoreInstruction::perform(ProcessorThread& thread) {
+			auto& memoryResolver = thread.getMemoryResolver();
+			auto& aRegister = thread.getContext().getRegister(_registerName);
+
+			memoryResolver[_memoryAddress] = (aRegister & 0xFF00) >> 8;
+			memoryResolver[_memoryAddress+1] = (aRegister & 0x00FF);
+		}
+
 	}
 }

@@ -23,17 +23,23 @@ set(SOURCE_FILES
         Source/BananaVM/Instruction/Instruction.cpp
         Source/BananaVM/Instruction/Instruction.h
 
-        Source/BananaVM/Instruction/LoadInstruction.cpp
-        Source/BananaVM/Instruction/LoadInstruction.h
+        Source/BananaVM/Instruction/MemoryInstructions.cpp
+        Source/BananaVM/Instruction/MemoryInstructions.h
 
-        Source/BananaVM/Instruction/StoreInstruction.cpp
-        Source/BananaVM/Instruction/StoreInstruction.h
+        Source/BananaVM/Instruction/ArithmeticInstructions.cpp
+        Source/BananaVM/Instruction/ArithmeticInstructions.h
 
-        Source/BananaVM/Instruction/AddInstruction.cpp
-        Source/BananaVM/Instruction/AddInstruction.h
+        Source/BananaVM/Instruction/BitwiseInstructions.cpp
+        Source/BananaVM/Instruction/BitwiseInstructions.h
 
-        Source/BananaVM/Instruction/SubtractInstruction.cpp
-        Source/BananaVM/Instruction/SubtractInstruction.h
+        Source/BananaVM/Instruction/ComparisionInstructions.cpp
+        Source/BananaVM/Instruction/ComparisionInstructions.h
+
+        Source/BananaVM/Instruction/BranchingInstructions.cpp
+        Source/BananaVM/Instruction/BranchingInstructions.h
+
+        Source/BananaVM/Instruction/ControlInstructions.cpp
+        Source/BananaVM/Instruction/ControlInstructions.h
 
         Source/BananaVM/Memory/MemoryResolver.cpp
         Source/BananaVM/Memory/MemoryResolver.h
@@ -47,14 +53,11 @@ set(SOURCE_FILES
         Source/BananaVM/Instruction/Decoder/InstructionDecoder.cpp
         Source/BananaVM/Instruction/Decoder/InstructionDecoder.h
 
-        Source/BananaVM/Instruction/HaltInstruction.cpp
-        Source/BananaVM/Instruction/HaltInstruction.h
-
-        Source/BananaVM/Instruction/DebugInstruction.cpp
-        Source/BananaVM/Instruction/DebugInstruction.h
-
         Source/BananaVM/Assembler/Assembler.cpp
         Source/BananaVM/Assembler/Assembler.h
+
+        Source/BananaVM/Exception/VMException.h
+        Source/BananaVM/Exception/InvalidArgumentException.h
 )
 add_executable(BananaVM ${SOURCE_FILES})
 target_compile_features(BananaVM PRIVATE cxx_range_for)

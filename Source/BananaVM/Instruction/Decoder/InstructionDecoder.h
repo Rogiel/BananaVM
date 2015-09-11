@@ -27,6 +27,9 @@ namespace BananaVM {
 				 */
 				std::unique_ptr<Instruction> decode(ThreadContext& context, Memory::MemoryResolver& memoryResolver);
 
+			private:
+				std::tuple<RegisterName, RegisterName> decodeBinaryInstruction(MemoryByte byte);
+				MemoryAddress decodeAddress(MemoryByte byte0, MemoryByte byte1);
 
 			};
 

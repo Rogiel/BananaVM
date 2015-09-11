@@ -83,6 +83,8 @@ namespace BananaVM {
 			 */
 			Assembler& seek(MemoryAddress address);
 
+			Assembler& mark(MemoryAddress& address);
+
 		public:
 			/**
 			 * Loads a constant into a register
@@ -124,6 +126,7 @@ namespace BananaVM {
 			 */
 			Assembler& store(RegisterName registerName, MemoryAddress address);
 
+		public:
 			/**
 			 * Performs a sum operation by adding two numbers
 			 *
@@ -133,7 +136,7 @@ namespace BananaVM {
 			 *
 			 * @return this assembler
 			 */
-			Assembler& add(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName);
+			Assembler& add(RegisterName registerName0, RegisterName registerName1);
 
 			/**
 			 * Performs a subtract operation by subtracting two numbers
@@ -144,8 +147,55 @@ namespace BananaVM {
 			 *
 			 * @return this assembler
 			 */
-			Assembler& subtract(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName);
+			Assembler& subtract(RegisterName registerName0, RegisterName registerName1);
 
+			/**
+			 * Performs a multiply operation by multiplying two numbers
+			 *
+			 * @param registerName0 the first register to be multiplied
+			 * @param registerName0 the second register to multiplied with the first
+			 * @param resultRegisterName the register to store the multiplication result to
+			 *
+			 * @return this assembler
+			 */
+			Assembler& multiply(RegisterName registerName0, RegisterName registerName1);
+
+			/**
+			 * Performs a divides operation by dividing two numbers
+			 *
+			 * @param registerName0 the first register to be divided
+			 * @param registerName0 the second register to divided with the first
+			 * @param resultRegisterName the register to store the division result to
+			 *
+			 * @return this assembler
+			 */
+			Assembler& divide(RegisterName registerName0, RegisterName registerName1);
+
+		public:
+			Assembler& bitwiseAnd(RegisterName registerName0, RegisterName registerName1);
+			Assembler& bitwiseOr(RegisterName registerName0, RegisterName registerName1);
+			Assembler& bitwiseNand(RegisterName registerName0, RegisterName registerName1);
+			Assembler& bitwiseXor(RegisterName registerName0, RegisterName registerName1);
+			Assembler& bitwiseNot(RegisterName registerName0);
+			Assembler& bitwiseRightShift(RegisterName registerName0, RegisterName registerName1);
+			Assembler& bitwiseLeftShift(RegisterName registerName0, RegisterName registerName1);
+
+		public:
+			Assembler& jump(MemoryAddress memoryAddress);
+			Assembler& jumpIf(RegisterName registerName, MemoryAddress memoryAddress);
+			Assembler& jumpIfCarry(MemoryAddress memoryAddress);
+
+		public:
+			Assembler& greaterThan(RegisterName registerName0, RegisterName registerName1);
+			Assembler& greaterOrEqualThan(RegisterName registerName0, RegisterName registerName1);
+
+			Assembler& lessThan(RegisterName registerName0, RegisterName registerName1);
+			Assembler& lessOrEqualThan(RegisterName registerName0, RegisterName registerName1);
+
+			Assembler& equal(RegisterName registerName0, RegisterName registerName1);
+			Assembler& notEqual(RegisterName registerName0, RegisterName registerName1);
+
+		public:
 			/**
 			 * Generates a debug instruction
 			 */

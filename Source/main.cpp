@@ -20,21 +20,32 @@ int main() {
 	// creates the memory resolver attached to the store
 	Memory::MemoryResolver memoryResolver(memoryStore);
 
-	// assembles a very simple program
+	// defines the factorial operand
+	Register factorial = 7;
+
+	// the memory address to jump when continuing the loop
+	MemoryAddress loopAddress;
+
+	// assembles a program that computes the factorial of a number
 	Assembler::Assembler(memoryStore)
-			.loadConstant(0, 100)
-			.loadConstant(1, 800)
-			.add(0, 1, 8)
-			.subtract(1, 0, 9)
-			.store(0, 3000)
-			.loadAddress(1, 1024)
-			.loadRegister(2, 0)
-			.loadAddress(3, 3000)
+			.loadConstant(REGISTER_0, factorial)
+			.loadConstant(REGISTER_1, 0)
+			.loadConstant(REGISTER_2, 1)
+			.loadConstant(REGISTER_3, 1)
+
+			.mark(loopAddress)
+
+			.multiply(REGISTER_2, REGISTER_0)
+			.loadRegister(REGISTER_2, REGISTER_ACCUMULATOR)
+
+			.subtract(REGISTER_0, REGISTER_3)
+			.loadRegister(REGISTER_0, REGISTER_ACCUMULATOR)
+
+			.notEqual(REGISTER_0, REGISTER_1)
+			.jumpIfCarry(loopAddress)
+
 			.debug()
 			.halt();
-
-	// create some static data
-	memoryStore.load({1, 0}, 1024);
 
 	// creates a new thread and run it
 	ProcessorThread thread(memoryResolver);
@@ -42,6 +53,7 @@ int main() {
 
 	// if we reach this point, HALT was possibly called
 	std::cout << "Processor is halted. Ending VM..." << std::endl;
+	std::cout << factorial << "! = " << thread.getContext().getRegister(REGISTER_2) << std::endl;
 
 	return 0;
 }
