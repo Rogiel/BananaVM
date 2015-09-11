@@ -25,15 +25,42 @@ namespace BananaVM {
 			};
 
 		private:
+			/**
+			 * The load type
+			 */
 			Type _type;
+
+			/**
+			 * The register to load the requested value to
+			 */
 			RegisterName _registerName;
 
-
+			/**
+			 * The memory address to load the data from
+			 */
 			MemoryAddress _memoryAddress;
+
+			/**
+			 * The constant value to be read
+			 */
 			Register _constant;
+
+			/**
+			 * The souce register name
+			 */
 			RegisterName _sourceRegisterName;
 
 		public:
+
+			/**
+			 * Creates a new LOAD instruction
+			 *
+			 * @param type the load type
+			 * @param registerName the register to load the requested value to
+			 * @param memoryAddress the memory address to load the data from
+			 * @param constant the constant value to be read
+			 * @param sourceRegisterName the souce register name
+			 */
 			LoadInstruction(Type type, RegisterName registerName, MemoryAddress memoryAddress, Register constant, RegisterName sourceRegisterName);
 
 		public:

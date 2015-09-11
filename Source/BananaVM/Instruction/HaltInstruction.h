@@ -12,7 +12,7 @@
 namespace BananaVM {
 	namespace Instruction {
 		/**
-		 * Implements the LOAD instruction
+		 * Implements the HALT instruction
 		 */
 		class HaltInstruction : public Instruction {
 		public:

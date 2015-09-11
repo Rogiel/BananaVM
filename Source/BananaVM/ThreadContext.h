@@ -101,6 +101,7 @@ namespace BananaVM {
 		void setHalted(bool halted) {
 			_halted = halted;
 		}
+
 	};
 
 }

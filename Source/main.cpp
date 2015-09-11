@@ -22,14 +22,19 @@ int main() {
 
 	// assembles a very simple program
 	Assembler::Assembler(memoryStore)
-			.debug()
 			.loadConstant(0, 100)
+			.loadConstant(1, 800)
+			.add(0, 1, 8)
+			.subtract(1, 0, 9)
 			.store(0, 3000)
 			.loadAddress(1, 1024)
 			.loadRegister(2, 0)
 			.loadAddress(3, 3000)
 			.debug()
 			.halt();
+
+	// create some static data
+	memoryStore.load({1, 0}, 1024);
 
 	// creates a new thread and run it
 	ProcessorThread thread(memoryResolver);

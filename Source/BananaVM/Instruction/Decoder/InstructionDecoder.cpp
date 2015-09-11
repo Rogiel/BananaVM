@@ -15,6 +15,8 @@
 #include "../HaltInstruction.h"
 #include "../DebugInstruction.h"
 #include "../StoreInstruction.h"
+#include "../AddInstruction.h"
+#include "../SubtractInstruction.h"
 
 namespace BananaVM {
 	namespace Instruction {
@@ -75,6 +77,28 @@ namespace BananaVM {
 						MemoryAddress address = arg2 | arg1 << 8;
 
 						return std::unique_ptr<Instruction>(new StoreInstruction(registerName, address));
+					}
+
+					case Opcode::ADD: {
+						MemoryByte arg0 = memoryResolver[pc++];
+						MemoryByte arg1 = memoryResolver[pc++];
+
+						RegisterName resultRegisterName = static_cast<RegisterName>(arg0 & 0b00001111);
+						RegisterName registerName0 = static_cast<RegisterName>(arg1 & 0b00001111);
+						RegisterName registerName1 = static_cast<RegisterName>((arg1 & 0b11110000) >> 4);
+
+						return std::unique_ptr<Instruction>(new AddInstruction(registerName0, registerName1, resultRegisterName));
+					}
+
+					case Opcode::SUBTRACT: {
+						MemoryByte arg0 = memoryResolver[pc++];
+						MemoryByte arg1 = memoryResolver[pc++];
+
+						RegisterName resultRegisterName = static_cast<RegisterName>(arg0 & 0b00001111);
+						RegisterName registerName0 = static_cast<RegisterName>(arg1 & 0b00001111);
+						RegisterName registerName1 = static_cast<RegisterName>((arg1 & 0b11110000) >> 4);
+
+						return std::unique_ptr<Instruction>(new SubtractInstruction(registerName0, registerName1, resultRegisterName));
 					}
 
 					case Opcode::HALT:

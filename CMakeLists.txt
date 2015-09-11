@@ -29,6 +29,12 @@ set(SOURCE_FILES
         Source/BananaVM/Instruction/StoreInstruction.cpp
         Source/BananaVM/Instruction/StoreInstruction.h
 
+        Source/BananaVM/Instruction/AddInstruction.cpp
+        Source/BananaVM/Instruction/AddInstruction.h
+
+        Source/BananaVM/Instruction/SubtractInstruction.cpp
+        Source/BananaVM/Instruction/SubtractInstruction.h
+
         Source/BananaVM/Memory/MemoryResolver.cpp
         Source/BananaVM/Memory/MemoryResolver.h
 

@@ -13,7 +13,7 @@ namespace BananaVM {
 	namespace Instruction {
 
 		/**
-		 * Implements the LOAD instruction
+		 * Implements the DEBUG instruction
 		 */
 		class DebugInstruction : public Instruction {
 		public:

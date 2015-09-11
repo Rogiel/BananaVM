@@ -85,6 +85,26 @@ namespace BananaVM {
 			);
 		}
 
+		Assembler& Assembler::add(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName) {
+			return add(
+					Opcode::ADD,
+					static_cast<MemoryByte>(resultRegisterName & 0b00001111),
+					static_cast<MemoryByte>(
+							(registerName0 & 0b00001111) | ((registerName1 & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::subtract(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName) {
+			return add(
+					Opcode::SUBTRACT,
+					static_cast<MemoryByte>(resultRegisterName & 0b00001111),
+					static_cast<MemoryByte>(
+							(registerName0 & 0b00001111) | ((registerName1 & 0b00001111) << 4)
+					)
+			);
+		}
+
 		Assembler& Assembler::debug() {
 			return add(Opcode::DEBUG);
 		}

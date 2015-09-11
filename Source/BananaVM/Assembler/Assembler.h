@@ -74,6 +74,13 @@ namespace BananaVM {
 			Assembler& add(Opcode opcode, MemoryByte args0, MemoryByte arg1, MemoryByte arg2);
 
 		public:
+			/**
+			 * Repositions the assembler head
+			 *
+			 * @param address the assemblers new head
+			 *
+			 * @return this assembler
+			 */
 			Assembler& seek(MemoryAddress address);
 
 		public:
@@ -86,10 +93,58 @@ namespace BananaVM {
 			 * @return this assembler
 			 */
 			Assembler& loadConstant(RegisterName registerName, Register constant);
-			Assembler& loadAddress(RegisterName registerName, MemoryAddress address);
-			Assembler& loadRegister(RegisterName registerName, RegisterName address);
 
+			/**
+			 * Loads the contents of a memory address into a register
+			 *
+			 * @param registerName the register to load to
+			 * @param address the memory address to load data from
+			 *
+			 * @return this assembler
+			 */
+			Assembler& loadAddress(RegisterName registerName, MemoryAddress address);
+
+			/**
+			 * Loads the contents of a register into a another register
+			 *
+			 * @param registerName the register to load to
+			 * @param souceRegisterName the register to load data from
+			 *
+			 * @return this assembler
+			 */
+			Assembler& loadRegister(RegisterName registerName, RegisterName souceRegisterName);
+
+			/**
+			 * Stores the contents of a register into a memory address
+			 *
+			 * @param registerName the register to store the data from
+			 * @param address the memory address to store content to
+			 *
+			 * @return this assembler
+			 */
 			Assembler& store(RegisterName registerName, MemoryAddress address);
+
+			/**
+			 * Performs a sum operation by adding two numbers
+			 *
+			 * @param registerName0 the first register to add
+			 * @param registerName0 the second register to add
+			 * @param resultRegisterName the register to store the sum result to
+			 *
+			 * @return this assembler
+			 */
+			Assembler& add(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName);
+
+			/**
+			 * Performs a subtract operation by subtracting two numbers
+			 *
+			 * @param registerName0 the first register to be subtracted
+			 * @param registerName0 the second register to subtract from the first
+			 * @param resultRegisterName the register to store the subtraction result to
+			 *
+			 * @return this assembler
+			 */
+			Assembler& subtract(RegisterName registerName0, RegisterName registerName1, RegisterName resultRegisterName);
 
 			/**
 			 * Generates a debug instruction

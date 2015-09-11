@@ -25,6 +25,29 @@ namespace BananaVM {
 		 */
 		STORE = 0x01,
 
+		ADD = 0x10,
+		SUBTRACT = 0x11,
+		MULTIPLY = 0x12,
+		DIVIDE = 0x13,
+
+		JUMP = 0x20,
+		CONDITIONAL_JUMP = 0x21,
+
+		GREATER_THAN = 0x30,
+		GREATER_OR_EQUAL_THAN = 0x31,
+		LESS_THAN = 0x32,
+		LESS_OR_EQUAL_THAN = 0x33,
+		EQUAL = 0x34,
+		NOT_EQUAL = 0x35,
+
+		AND = 0x40,
+		OR = 0x41,
+		NAND = 0x42,
+		XOR = 0x43,
+		NOT = 0x44,
+		RIGHT_SHIFT = 0x45,
+		LEFT_SHIFT = 0x46,
+
 		/**
 		 * Halts the processor.
 		 *
