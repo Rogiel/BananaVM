@@ -12,6 +12,7 @@
 #include "InstructionDecoder.h"
 #include "../LoadInstruction.h"
 #include "../HaltInstruction.h"
+#include "../DebugInstruction.h"
 
 namespace BananaVM {
 	namespace Instruction {
@@ -32,6 +33,9 @@ namespace BananaVM {
 
 					case Opcode::HALT:
 						return std::unique_ptr<Instruction>(new HaltInstruction());
+
+					case Opcode::DEBUG:
+						return std::unique_ptr<Instruction>(new DebugInstruction());
 
 					default:
 						throw std::string("Unknown opcode!!!");

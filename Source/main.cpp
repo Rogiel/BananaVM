@@ -2,15 +2,21 @@
 
 #include "BananaVM/Memory/MemoryStore.h"
 #include "BananaVM/ProcessorThread.h"
+#include "BananaVM/Assembler/Assembler.h"
 
 int main() {
-	BananaVM::Memory::MemoryStore memoryStore(8 * 1024);
-	BananaVM::Memory::MemoryResolver memoryResolver(memoryStore);
+	using namespace BananaVM;
 
-	memoryStore[0] = 0x00;
-	memoryStore[1] = 0xfe;
+	Memory::MemoryStore memoryStore(8 * 1024);
+	Memory::MemoryResolver memoryResolver(memoryStore);
 
-	BananaVM::ProcessorThread thread(memoryResolver);
+	Assembler::Assembler(memoryStore)
+			.loadConstant(0, 0)
+			.loadConstant(0, 0)
+			.debug()
+			.halt();
+
+	ProcessorThread thread(memoryResolver);
 	thread.run();
 
 	return 0;

@@ -7,12 +7,14 @@
 
 #pragma once
 
+#include "Types.h"
+
 namespace BananaVM {
 
 	/**
 	 * Enum representing all known (and valid) opcodes
 	 */
-	enum class Opcode {
+	enum class Opcode : MemoryByte {
 		/**
 		 * Loads the contents of memory into a register
 		 */
@@ -24,7 +26,9 @@ namespace BananaVM {
 		STORE = 0x01,
 
 		/**
-		 * Halts the processor
+		 * Halts the processor.
+		 *
+		 * Catching fire is optional :)
 		 */
 		HALT = 0xfe,
 

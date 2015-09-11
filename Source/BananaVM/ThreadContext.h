@@ -58,7 +58,7 @@ namespace BananaVM {
 		 *
 		 * @return the register represented by "reg"
 		 */
-		Register& getRegister(std::uint8_t reg) {
+		Register& getRegister(RegisterName reg) {
 			return _registers[reg];
 		}
 
@@ -67,7 +67,7 @@ namespace BananaVM {
 		 *
 		 * @return the register represented by "reg"
 		 */
-		const Register& getRegister(std::uint8_t reg) const {
+		const Register& getRegister(RegisterName reg) const {
 			return _registers[reg];
 		}
 
@@ -77,7 +77,7 @@ namespace BananaVM {
 		 * @param reg the register to change value
 		 * @param aRegister the new register value
 		 */
-		void setRegister(std::uint8_t reg, const Register& aRegister) {
+		void setRegister(RegisterName reg, const Register& aRegister) {
 			_registers[reg] = aRegister;
 		}
 

@@ -15,6 +15,8 @@ namespace BananaVM {
 	// -- Register
 	// ----------------------------------------------------
 
+	using RegisterName = std::uint8_t;
+
 	/**
 	 * The register type
 	 */
