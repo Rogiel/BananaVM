@@ -11,7 +11,6 @@
 
 namespace BananaVM {
 	namespace Instruction {
-
 		/**
 		 * Implements the LOAD instruction
 		 */

@@ -38,7 +38,7 @@ namespace BananaVM {
 
 	public:
 		/**
-		 * Runs a single intruction
+		 * Runs a single instruction
 		 */
 		void step();
 
@@ -47,6 +47,27 @@ namespace BananaVM {
 		 */
 		void run();
 
+	public:
+		/**
+		 * @return the thread context
+		 */
+		const ThreadContext& getContext() const {
+			return _context;
+		}
+
+		/**
+		 * @return the thread context
+		 */
+		ThreadContext& getContext() {
+			return _context;
+		}
+
+		/**
+		 * @return the memory resolver
+		 */
+		Memory::MemoryResolver& getMemoryResolver() const {
+			return _memoryResolver;
+		}
 	};
 
 }
