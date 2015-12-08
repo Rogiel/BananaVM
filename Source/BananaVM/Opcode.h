@@ -18,48 +18,52 @@ namespace BananaVM {
 		/**
 		 * Loads the contents of memory into a register
 		 */
-		LOAD = 0x00,
+		LOAD = 0b00000000,
 
 		/**
 		 * Stores a registers content into a memory address
 		 */
-		STORE = 0x01,
+		STORE = 0b00000001,
 
-		ADD = 0x10,
-		SUBTRACT = 0x11,
-		MULTIPLY = 0x12,
-		DIVIDE = 0x13,
+		WRITE_IO = 0b00000010,
+		READ_IO = 0b00000011,
 
-		JUMP = 0x20,
+		ADD = 0b00010000,
+		SUBTRACT = 0b00010001,
+		MULTIPLY = 0b00010010,
+		DIVIDE = 0b00010011,
+
+		JUMP = 0b00100000,
 		CONDITIONAL_JUMP = 0x21,
-		JUMP_IF_CARRY = 0x22,
+		JUMP_IF_CARRY = 0b00100010,
 
-		GREATER_THAN = 0x30,
-		GREATER_OR_EQUAL_THAN = 0x31,
-		LESS_THAN = 0x32,
-		LESS_OR_EQUAL_THAN = 0x33,
-		EQUAL = 0x34,
-		NOT_EQUAL = 0x35,
+		GREATER_THAN = 0b00110000,
+		GREATER_OR_EQUAL_THAN = 0b00110001,
+		LESS_THAN = 0b00110010,
+		LESS_OR_EQUAL_THAN = 0b00110011,
+		EQUAL = 0b00110100,
+		NOT_EQUAL = 0b00110101,
 
-		AND = 0x40,
-		OR = 0x41,
-		NAND = 0x42,
-		XOR = 0x43,
-		NOT = 0x44,
-		RIGHT_SHIFT = 0x45,
-		LEFT_SHIFT = 0x46,
+		AND = 0b01000000,
+		OR = 0b01000001,
+		NAND = 0b01000010,
+		XOR = 0b01000100,
+		NOR = 0b01000011,
+		NOT = 0b01000101,
+		RIGHT_SHIFT = 0b01001000,
+		LEFT_SHIFT = 0b01001001,
 
 		/**
 		 * Halts the processor.
 		 *
 		 * Catching fire is optional :)
 		 */
-		HALT = 0xfe,
+		HALT = 0b11111110,
 
 		/**
 		 * A debug instruction that is only available on the VM. Prints the processor context and state to the console
 		 */
-		DEBUG = 0xff
+		DEBUG = 0b11111111
 	};
 
 }

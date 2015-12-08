@@ -21,14 +21,15 @@ int main() {
 	Memory::MemoryResolver memoryResolver(memoryStore);
 
 	// defines the factorial operand
-	Register factorial = 7;
+	Register factorial = 8;
 
 	// the memory address to jump when continuing the loop
 	MemoryAddress loopAddress;
 
 	// assembles a program that computes the factorial of a number
 	Assembler::Assembler(memoryStore)
-			.loadConstant(REGISTER_0, factorial)
+//			.loadConstant(REGISTER_0, factorial)
+			.readIO(REGISTER_0)
 			.loadConstant(REGISTER_1, 0)
 			.loadConstant(REGISTER_2, 1)
 			.loadConstant(REGISTER_3, 1)
@@ -44,8 +45,14 @@ int main() {
 			.notEqual(REGISTER_0, REGISTER_1)
 			.jumpIfCarry(loopAddress)
 
-			.debug()
-			.halt();
+			.writeIO(REGISTER_2)
+
+			//.debug()
+			//.halt()
+			.jump(0)
+			.printMemoryArray();
+
+
 
 	// creates a new thread and run it
 	ProcessorThread thread(memoryResolver);

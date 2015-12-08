@@ -206,6 +206,13 @@ namespace BananaVM {
 			 */
 			Assembler& halt();
 
+		public:
+			Assembler& writeIO(RegisterName registerName);
+			Assembler& readIO(RegisterName registerName);
+
+		public:
+			void printMemoryArray();
+
 		};
 
 	}

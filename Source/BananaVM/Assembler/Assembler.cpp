@@ -6,6 +6,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include "Assembler.h"
 #include "../Instruction/MemoryInstructions.h"
 
@@ -272,6 +273,31 @@ namespace BananaVM {
 							(registerName1 & 0b00001111) | ((registerName0 & 0b00001111) << 4)
 					)
 			);
+		}
+
+		Assembler& Assembler::writeIO(RegisterName registerName) {
+			return add(
+					Opcode::WRITE_IO,
+					static_cast<MemoryByte>(
+							((registerName & 0b00001111) << 4)
+					)
+			);
+		}
+
+		Assembler& Assembler::readIO(RegisterName registerName) {
+			return add(
+					Opcode::READ_IO,
+					static_cast<MemoryByte>(
+							((registerName & 0b00001111) << 4)
+					)
+			);
+		}
+
+		void Assembler::printMemoryArray() {
+			for(auto i = 0; i<_pointer; ++i) {
+				std::bitset<8> bitset(_memoryStore[i]);
+				std::cout << "\"" << bitset << "\"," << std::endl;
+			}
 		}
 	}
 }
